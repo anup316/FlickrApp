@@ -68,21 +68,25 @@ public class PhotoFramePresenterImpl implements PhotoFramePresenter, PhotoListAs
 
     @Override
     public void onSuccess(JSONObject object) {
-        final List<Photo> photoList = new ArrayList<>();
-        try {
-            final JSONObject photos = object.getJSONObject("photos");
-            final JSONArray photosJSONArray = photos.getJSONArray("photo");
-            for (int i = 0; i < photosJSONArray.length(); i++) {
-                final JSONObject jsonObject = photosJSONArray.getJSONObject(i);
-                final Photo photo = new Photo(jsonObject);
-                photoList.add(photo);
+        if (mView != null) {
+            mView.hideLoading();
+            final List<Photo> photoList = new ArrayList<>();
+            try {
+                final JSONObject photos = object.getJSONObject("photos");
+                final JSONArray photosJSONArray = photos.getJSONArray("photo");
+                for (int i = 0; i < photosJSONArray.length(); i++) {
+                    final JSONObject jsonObject = photosJSONArray.getJSONObject(i);
+                    final Photo photo = new Photo(jsonObject);
+                    photoList.add(photo);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            if (photoList.size() > 0) {
+                mView.setAdapter(photoList);
+            }
         }
-        if (photoList.size() > 0) {
-            mView.setAdapter(photoList);
-        }
+
     }
 
 
