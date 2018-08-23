@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FlickerApp</string>
+    <string name="error_text">Something went wrong with the server!!</string>
+    <string name="error_text_db">No information in the database!!</string>
+</resources>
